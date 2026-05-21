@@ -3,6 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Discover random fun facts about animals, space, history, and more!">
     <title>Random Fun Facts</title>
     <style>
         * {
@@ -11,9 +12,19 @@
             box-sizing: border-box;
         }
 
+        :root {
+            --primary-gradient: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            --shadow-light: 0 4px 15px rgba(102, 126, 234, 0.4);
+            --shadow-medium: 0 6px 20px rgba(102, 126, 234, 0.6);
+            --text-dark: #333;
+            --text-light: #666;
+            --white: #fff;
+            --transition: all 0.3s ease;
+        }
+
         body {
             font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            background: var(--primary-gradient);
             min-height: 100vh;
             display: flex;
             justify-content: center;
@@ -22,7 +33,7 @@
         }
 
         .container {
-            background: white;
+            background: var(--white);
             border-radius: 15px;
             box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
             padding: 40px;
@@ -32,21 +43,21 @@
         }
 
         h1 {
-            color: #333;
+            color: var(--text-dark);
             margin-bottom: 10px;
             font-size: 2.5em;
         }
 
         .subtitle {
-            color: #666;
+            color: var(--text-light);
             font-size: 0.9em;
             margin-bottom: 30px;
             font-style: italic;
         }
 
         .fact-box {
-            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-            color: white;
+            background: var(--primary-gradient);
+            color: var(--white);
             padding: 30px;
             border-radius: 10px;
             font-size: 1.2em;
@@ -57,6 +68,12 @@
             justify-content: center;
             margin-bottom: 30px;
             animation: fadeIn 0.5s ease-in;
+            word-wrap: break-word;
+            overflow-wrap: break-word;
+        }
+
+        .fact-box.animate {
+            animation: slideIn 0.5s ease-in;
         }
 
         @keyframes fadeIn {
@@ -70,39 +87,150 @@
             }
         }
 
+        @keyframes slideIn {
+            from {
+                opacity: 0;
+                transform: translateY(20px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
         .button-group {
             display: flex;
             gap: 15px;
             justify-content: center;
             flex-wrap: wrap;
+            margin-bottom: 20px;
         }
 
         button {
-            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-            color: white;
+            background: var(--primary-gradient);
+            color: var(--white);
             border: none;
             padding: 12px 30px;
             font-size: 1em;
             border-radius: 25px;
             cursor: pointer;
-            transition: all 0.3s ease;
+            transition: var(--transition);
             font-weight: 600;
-            box-shadow: 0 4px 15px rgba(102, 126, 234, 0.4);
+            box-shadow: var(--shadow-light);
         }
 
-        button:hover {
+        button:hover:not(:disabled) {
             transform: translateY(-2px);
-            box-shadow: 0 6px 20px rgba(102, 126, 234, 0.6);
+            box-shadow: var(--shadow-medium);
         }
 
-        button:active {
+        button:active:not(:disabled) {
             transform: translateY(0);
         }
 
-        .fact-counter {
-            color: #666;
-            font-size: 0.9em;
+        button:disabled {
+            opacity: 0.6;
+            cursor: not-allowed;
+        }
+
+        button:focus {
+            outline: 2px solid var(--text-dark);
+            outline-offset: 2px;
+        }
+
+        .stats-section {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 15px;
             margin-top: 20px;
+            padding-top: 20px;
+            border-top: 1px solid #eee;
+        }
+
+        .stat {
+            background: #f8f9fa;
+            padding: 15px;
+            border-radius: 8px;
+        }
+
+        .stat-label {
+            color: var(--text-light);
+            font-size: 0.85em;
+            margin-bottom: 5px;
+        }
+
+        .stat-value {
+            color: var(--text-dark);
+            font-size: 1.8em;
+            font-weight: bold;
+        }
+
+        .action-buttons {
+            display: flex;
+            gap: 10px;
+            justify-content: center;
+            flex-wrap: wrap;
+            margin-top: 15px;
+        }
+
+        button.secondary {
+            background: #f0f0f0;
+            color: var(--text-dark);
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+        }
+
+        button.secondary:hover:not(:disabled) {
+            background: #e0e0e0;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+        }
+
+        .toast {
+            position: fixed;
+            bottom: 20px;
+            right: 20px;
+            background: var(--text-dark);
+            color: var(--white);
+            padding: 15px 20px;
+            border-radius: 8px;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+            animation: slideUp 0.3s ease-out;
+            z-index: 1000;
+        }
+
+        @keyframes slideUp {
+            from {
+                transform: translateY(100px);
+                opacity: 0;
+            }
+            to {
+                transform: translateY(0);
+                opacity: 1;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .container {
+                padding: 25px;
+            }
+
+            h1 {
+                font-size: 1.8em;
+            }
+
+            .fact-box {
+                font-size: 1em;
+                padding: 20px;
+                min-height: 100px;
+            }
+
+            button {
+                padding: 10px 20px;
+                font-size: 0.95em;
+            }
+
+            .stats-section {
+                grid-template-columns: 1fr;
+            }
         }
     </style>
 </head>
@@ -111,21 +239,34 @@
         <h1>🎉 Fun Facts</h1>
         <p class="subtitle">Click the button to discover something amazing!</p>
         
-        <div class="fact-box" id="factBox">
+        <div class="fact-box" id="factBox" role="region" aria-live="polite" aria-label="Current fact">
             Loading your first fun fact...
         </div>
 
         <div class="button-group">
-            <button onclick="getRandomFact()">Get Random Fact</button>
-            <button onclick="location.reload()">Reset</button>
+            <button id="nextFactBtn" aria-label="Get next random fact">Get Random Fact</button>
+            <button id="favBtn" class="secondary" aria-label="Toggle favorite">❤️ Favorite</button>
         </div>
 
-        <div class="fact-counter">
-            <span id="factCount">0</span> facts viewed
+        <div class="action-buttons">
+            <button id="copyBtn" class="secondary" aria-label="Copy fact to clipboard">📋 Copy</button>
+            <button id="resetBtn" class="secondary" aria-label="Reset counter and clear favorites">Reset All</button>
+        </div>
+
+        <div class="stats-section">
+            <div class="stat">
+                <div class="stat-label">Facts Viewed</div>
+                <div class="stat-value" id="factCount">0</div>
+            </div>
+            <div class="stat">
+                <div class="stat-label">Favorites</div>
+                <div class="stat-value" id="favoriteCount">0</div>
+            </div>
         </div>
     </div>
 
     <script>
+        // ============ Data ============
         const funFacts = [
             "Honey never spoils. Archaeologists have found pots of honey in ancient Egyptian tombs that are over 3,000 years old and still edible!",
             "A group of flamingos is called a 'flamboyance.'",
@@ -154,26 +295,175 @@
             "The moon is moving away from Earth at about 3.8 centimeters per year."
         ];
 
-        let factCount = 0;
+        // ============ State Management ============
+        const state = {
+            factCount: parseInt(localStorage.getItem('factCount')) || 0,
+            favorites: JSON.parse(localStorage.getItem('favorites')) || [],
+            currentFact: null,
+            lastFactIndex: -1,
+            isAnimating: false
+        };
 
-        function getRandomFact() {
-            const randomIndex = Math.floor(Math.random() * funFacts.length);
-            const randomFact = funFacts[randomIndex];
-            
-            const factBox = document.getElementById('factBox');
-            factBox.style.animation = 'none';
-            
-            setTimeout(() => {
-                factBox.textContent = randomFact;
-                factBox.style.animation = 'fadeIn 0.5s ease-in';
-            }, 10);
-            
-            factCount++;
-            document.getElementById('factCount').textContent = factCount;
+        // ============ DOM Elements ============
+        const elements = {
+            factBox: document.getElementById('factBox'),
+            nextFactBtn: document.getElementById('nextFactBtn'),
+            favBtn: document.getElementById('favBtn'),
+            copyBtn: document.getElementById('copyBtn'),
+            resetBtn: document.getElementById('resetBtn'),
+            factCount: document.getElementById('factCount'),
+            favoriteCount: document.getElementById('favoriteCount')
+        };
+
+        // ============ Utility Functions ============
+        /**
+         * Get a random fact that's different from the last one shown
+         */
+        function getRandomFactIndex() {
+            let randomIndex;
+            do {
+                randomIndex = Math.floor(Math.random() * funFacts.length);
+            } while (randomIndex === state.lastFactIndex && funFacts.length > 1);
+            return randomIndex;
         }
 
-        // Display a fact when the page loads
-        window.addEventListener('load', getRandomFact);
+        /**
+         * Display a toast notification
+         */
+        function showToast(message) {
+            const toast = document.createElement('div');
+            toast.className = 'toast';
+            toast.textContent = message;
+            document.body.appendChild(toast);
+
+            setTimeout(() => {
+                toast.remove();
+            }, 3000);
+        }
+
+        /**
+         * Save state to localStorage
+         */
+        function saveState() {
+            localStorage.setItem('factCount', state.factCount);
+            localStorage.setItem('favorites', JSON.stringify(state.favorites));
+        }
+
+        /**
+         * Update UI counters
+         */
+        function updateCounters() {
+            elements.factCount.textContent = state.factCount;
+            elements.favoriteCount.textContent = state.favorites.length;
+            updateFavButton();
+        }
+
+        /**
+         * Update favorite button appearance
+         */
+        function updateFavButton() {
+            const isFavorited = state.favorites.includes(state.currentFact);
+            elements.favBtn.textContent = isFavorited ? '❤️ Favorited' : '🤍 Favorite';
+        }
+
+        // ============ Main Functions ============
+        /**
+         * Display a new random fact
+         */
+        function getRandomFact() {
+            if (state.isAnimating) return;
+
+            state.isAnimating = true;
+            elements.nextFactBtn.disabled = true;
+
+            const randomIndex = getRandomFactIndex();
+            const randomFact = funFacts[randomIndex];
+            state.currentFact = randomFact;
+            state.lastFactIndex = randomIndex;
+
+            // Trigger animation by removing and re-adding class
+            elements.factBox.classList.remove('animate');
+            
+            setTimeout(() => {
+                elements.factBox.textContent = randomFact;
+                elements.factBox.classList.add('animate');
+                
+                state.factCount++;
+                updateCounters();
+                saveState();
+
+                state.isAnimating = false;
+                elements.nextFactBtn.disabled = false;
+            }, 50);
+        }
+
+        /**
+         * Toggle favorite status of current fact
+         */
+        function toggleFavorite() {
+            if (!state.currentFact) return;
+
+            const index = state.favorites.indexOf(state.currentFact);
+            if (index > -1) {
+                state.favorites.splice(index, 1);
+                showToast('Removed from favorites');
+            } else {
+                state.favorites.push(state.currentFact);
+                showToast('Added to favorites!');
+            }
+
+            saveState();
+            updateCounters();
+        }
+
+        /**
+         * Copy current fact to clipboard
+         */
+        function copyToClipboard() {
+            if (!state.currentFact) return;
+
+            navigator.clipboard.writeText(state.currentFact).then(() => {
+                showToast('Copied to clipboard!');
+            }).catch(() => {
+                showToast('Failed to copy');
+            });
+        }
+
+        /**
+         * Reset everything
+         */
+        function resetAll() {
+            if (confirm('Are you sure? This will reset your counter and favorites.')) {
+                state.factCount = 0;
+                state.favorites = [];
+                state.currentFact = null;
+                state.lastFactIndex = -1;
+                saveState();
+                updateCounters();
+                showToast('All data reset');
+                getRandomFact();
+            }
+        }
+
+        // ============ Event Listeners ============
+        elements.nextFactBtn.addEventListener('click', getRandomFact);
+        elements.favBtn.addEventListener('click', toggleFavorite);
+        elements.copyBtn.addEventListener('click', copyToClipboard);
+        elements.resetBtn.addEventListener('click', resetAll);
+
+        // Keyboard shortcuts
+        document.addEventListener('keydown', (e) => {
+            if (e.key === ' ') {
+                e.preventDefault();
+                getRandomFact();
+            }
+        });
+
+        // ============ Initialization ============
+        window.addEventListener('load', () => {
+            updateCounters();
+            getRandomFact();
+        });
     </script>
 </body>
 </html>
