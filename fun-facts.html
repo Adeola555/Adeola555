@@ -1,0 +1,179 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Random Fun Facts</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            padding: 20px;
+        }
+
+        .container {
+            background: white;
+            border-radius: 15px;
+            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
+            padding: 40px;
+            max-width: 600px;
+            width: 100%;
+            text-align: center;
+        }
+
+        h1 {
+            color: #333;
+            margin-bottom: 10px;
+            font-size: 2.5em;
+        }
+
+        .subtitle {
+            color: #666;
+            font-size: 0.9em;
+            margin-bottom: 30px;
+            font-style: italic;
+        }
+
+        .fact-box {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            padding: 30px;
+            border-radius: 10px;
+            font-size: 1.2em;
+            line-height: 1.6;
+            min-height: 120px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-bottom: 30px;
+            animation: fadeIn 0.5s ease-in;
+        }
+
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+                transform: translateY(10px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .button-group {
+            display: flex;
+            gap: 15px;
+            justify-content: center;
+            flex-wrap: wrap;
+        }
+
+        button {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            border: none;
+            padding: 12px 30px;
+            font-size: 1em;
+            border-radius: 25px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            font-weight: 600;
+            box-shadow: 0 4px 15px rgba(102, 126, 234, 0.4);
+        }
+
+        button:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 20px rgba(102, 126, 234, 0.6);
+        }
+
+        button:active {
+            transform: translateY(0);
+        }
+
+        .fact-counter {
+            color: #666;
+            font-size: 0.9em;
+            margin-top: 20px;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>🎉 Fun Facts</h1>
+        <p class="subtitle">Click the button to discover something amazing!</p>
+        
+        <div class="fact-box" id="factBox">
+            Loading your first fun fact...
+        </div>
+
+        <div class="button-group">
+            <button onclick="getRandomFact()">Get Random Fact</button>
+            <button onclick="location.reload()">Reset</button>
+        </div>
+
+        <div class="fact-counter">
+            <span id="factCount">0</span> facts viewed
+        </div>
+    </div>
+
+    <script>
+        const funFacts = [
+            "Honey never spoils. Archaeologists have found pots of honey in ancient Egyptian tombs that are over 3,000 years old and still edible!",
+            "A group of flamingos is called a 'flamboyance.'",
+            "Octopuses have three hearts - two pump blood to the gills, and one pumps blood to the rest of the body.",
+            "The Great Wall of China isn't actually visible from space with the naked eye.",
+            "Bananas are berries, but strawberries aren't - botanically speaking!",
+            "A day on Venus is longer than a year on Venus.",
+            "Cows have best friends and can become stressed when they're separated.",
+            "The tongue print of every person is unique, just like fingerprints.",
+            "Sharks are older than dinosaurs - they've existed for over 450 million years.",
+            "A group of crows is called a 'murder.'",
+            "The Eiffel Tower can be 15 cm taller in summer due to thermal expansion.",
+            "Wombats produce cube-shaped droppings.",
+            "A cockroach can live for a week without its head!",
+            "Cats spend 70% of their lives sleeping.",
+            "The fingerprints of koalas are so similar to human fingerprints that they can confuse crime scene investigators.",
+            "If you yelled for 8 years, 7 months and 6 days, you would produce enough sound energy to heat one cup of coffee.",
+            "The shortest war in history was between Zanzibar and England in 1896 and lasted only 38 to 45 minutes.",
+            "Scotland's national animal is a unicorn.",
+            "Peanuts aren't nuts - they're legumes.",
+            "A group of owls is called a 'parliament.'",
+            "The smell of a new car comes from over 50 volatile organic compounds.",
+            "Cleopatra lived closer to the invention of the iPhone than to the construction of the Great Pyramid.",
+            "Dolphins have names for each other and call out to friends by name.",
+            "A jellyfish is 95% water and has no brain, heart, or blood.",
+            "The moon is moving away from Earth at about 3.8 centimeters per year."
+        ];
+
+        let factCount = 0;
+
+        function getRandomFact() {
+            const randomIndex = Math.floor(Math.random() * funFacts.length);
+            const randomFact = funFacts[randomIndex];
+            
+            const factBox = document.getElementById('factBox');
+            factBox.style.animation = 'none';
+            
+            setTimeout(() => {
+                factBox.textContent = randomFact;
+                factBox.style.animation = 'fadeIn 0.5s ease-in';
+            }, 10);
+            
+            factCount++;
+            document.getElementById('factCount').textContent = factCount;
+        }
+
+        // Display a fact when the page loads
+        window.addEventListener('load', getRandomFact);
+    </script>
+</body>
+</html>
